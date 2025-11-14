@@ -28,7 +28,7 @@ S3 Static Website :	http://devops-master-bucket123456.s3-website.ap-south-1.amaz
 
 API Gateway Invoke URL : https://29t07zklok.execute-api.ap-south-1.amazonaws.com/prod
 
-CloudFront URL	: d1y0l2mqbj21dy.cloudfront.net
+CloudFront URL	: https://d1y0l2mqbj21dy.cloudfront.net/
 
 🛠 AWS Services Used
 
