@@ -24,42 +24,36 @@ User → CloudFront → S3 (Frontend) → API Gateway → Lambda (GET/POST) → 
 
 🌐 Live Resources
 Component	URL
-S3 Static Website	http://devops-master-bucket123456.s3-website.ap-south-1.amazonaws.com/
+S3 Static Website :	http://devops-master-bucket123456.s3-website.ap-south-1.amazonaws.com/
 
-API Gateway Invoke URL	https://29t07zklok.execute-api.ap-south-1.amazonaws.com/prod
+API Gateway Invoke URL : https://29t07zklok.execute-api.ap-south-1.amazonaws.com/prod
 
-CloudFront URL	(Add after deployment)
+CloudFront URL	: d1y0l2mqbj21dy.cloudfront.net
+
 🛠 AWS Services Used
+
 1️⃣ Amazon S3
 
 Hosts frontend HTML/CSS/JS
-
 Acts as the origin for CloudFront
-
 Public read access (via static hosting)
 
 2️⃣ Amazon CloudFront
 
 Improves performance globally
-
 Custom domain + SSL (optional)
-
 Caches static website assets
 
 3️⃣ Amazon API Gateway
 
 Handles GET, POST, and OPTIONS
-
 Lambda Proxy Integration enabled
-
 CORS fully configured
 
 4️⃣ AWS Lambda
 
 Two functions:
-
 🟧 GET Lambda — Fetch Students
-
 
 import json
 import boto3
