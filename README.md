@@ -1,60 +1,87 @@
-# Serverless-Web-Application
-Deploying Serverless Web Application on AWS: S3, API Gateway, Lambda, DynamoDB and CloudFront
+# 🌐 Serverless Web Application on AWS
 
-Deploying a Serverless Web Application on AWS
-Using S3, CloudFront, API Gateway, Lambda, and DynamoDB
-🚀 Project Overview
+Deploying a Serverless Web Application using **S3, CloudFront, API Gateway, Lambda, and DynamoDB**
 
-This project demonstrates how to deploy a fully serverless web application using AWS managed services:
+---
 
-Amazon S3 – Static website hosting
+## 🚀 Project Overview
 
-Amazon CloudFront – Global CDN for caching and performance
+This project demonstrates how to deploy a **fully serverless web application** on AWS using managed services.
+The application allows users to **insert and retrieve student data** using a clean, scalable, pay-per-use architecture.
 
-Amazon API Gateway – REST API interface
+### 🧩 **AWS Services Used**
 
-AWS Lambda – Serverless backend compute
+* **Amazon S3** – Static website hosting (Frontend)
+* **Amazon CloudFront** – Global CDN for performance + caching
+* **Amazon API Gateway** – REST API interface
+* **AWS Lambda** – Serverless compute for backend (GET & POST)
+* **Amazon DynamoDB** – NoSQL database for student records
 
-Amazon DynamoDB – NoSQL database
+---
 
-The application allows users to insert and retrieve student data using a clean serverless architecture.
+## 🏗 Architecture
 
-🏗 Architecture
-User → CloudFront → S3 (Frontend) → API Gateway → Lambda (GET/POST) → DynamoDB
+```
+User → CloudFront → S3 (Frontend)
+                     ↓
+                  API Gateway → Lambda (GET / POST) → DynamoDB
+```
 
-🌐 Live Resources
-Component	URL
-S3 Static Website :	http://devops-master-bucket123456.s3-website.ap-south-1.amazonaws.com/
+---
 
-API Gateway Invoke URL : https://29t07zklok.execute-api.ap-south-1.amazonaws.com/prod
+## 🌐 Live Resources
 
-CloudFront URL	: https://d1y0l2mqbj21dy.cloudfront.net/
+| Component                  | URL                                                                                                                                              |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **S3 Static Website**      | [http://devops-master-bucket123456.s3-website.ap-south-1.amazonaws.com/](http://devops-master-bucket123456.s3-website.ap-south-1.amazonaws.com/) |
+| **API Gateway Invoke URL** | [https://29t07zklok.execute-api.ap-south-1.amazonaws.com/prod](https://29t07zklok.execute-api.ap-south-1.amazonaws.com/prod)                     |
+| **CloudFront URL**         | [https://d1y0l2mqbj21dy.cloudfront.net/](https://d1y0l2mqbj21dy.cloudfront.net/)                                                                 |
 
-🛠 AWS Services Used
+---
 
-1️⃣ Amazon S3
+# 🛠 AWS Services Used (Detailed)
 
-Hosts frontend HTML/CSS/JS
-Acts as the origin for CloudFront
-Public read access (via static hosting)
+---
 
-2️⃣ Amazon CloudFront
+## 1️⃣ Amazon S3 (Frontend Hosting)
 
-Improves performance globally
-Custom domain + SSL (optional)
-Caches static website assets
+* Hosts the **HTML / CSS / JavaScript** frontend
+* Public read access via static website hosting
+* Acts as the **origin for CloudFront**
+* Easy to update and version
 
-3️⃣ Amazon API Gateway
+---
 
-Handles GET, POST, and OPTIONS
-Lambda Proxy Integration enabled
-CORS fully configured
+## 2️⃣ Amazon CloudFront (CDN)
 
-4️⃣ AWS Lambda
+* Speed up global delivery of frontend
+* Caches static files (HTML, JS, CSS)
+* Optional custom domain + SSL
+* Origin = S3 bucket
 
-Two functions:
-🟧 GET Lambda — Fetch Students
+---
 
+## 3️⃣ Amazon API Gateway (REST API)
+
+* Handles:
+
+  * **GET** → Retrieve student data
+  * **POST** → Insert student data
+  * **OPTIONS** → CORS preflight
+* Lambda Proxy Integration enabled
+* CORS enabled for full browser support
+
+---
+
+## 4️⃣ AWS Lambda Functions
+
+Two Lambda functions handle database operations.
+
+---
+
+### 🟧 **GET Lambda — Fetch Students**
+
+```python
 import json
 import boto3
 from decimal import Decimal
@@ -88,11 +115,13 @@ def lambda_handler(event, context):
         }
     except Exception as e:
         return {"statusCode": 500, "body": json.dumps({"error": str(e)})}
+```
 
+---
 
+### 🟧 **POST Lambda — Insert Students**
 
-🟧 POST Lambda — Insert Students
-
+```python
 import json
 import boto3
 
@@ -124,27 +153,31 @@ def lambda_handler(event, context):
 
     except Exception as e:
         return {"statusCode": 500, "body": json.dumps({"error": str(e)})}
+```
 
+---
 
-🗂 Database – DynamoDB
+## 5️⃣ DynamoDB — NoSQL Database
 
-Table: studentData
-Primary Key: studentid (String)
+**Table Name:** `studentData`
 
-Additional Attributes:
-name
-class
-age
+| Attribute | Type                 |
+| --------- | -------------------- |
+| studentid | String (Primary Key) |
+| name      | String               |
+| class     | String               |
+| age       | Number               |
 
+---
 
-📁 Project Structure
+# 📁 Project Structure
 
+```
 serverless-student-app/
 │
 ├── frontend/
 │   ├── index.html
-│   ├── app.js
-│
+│   └── app.js
 │
 ├── lambdas/
 │   ├── getStudent.py
@@ -153,13 +186,86 @@ serverless-student-app/
 ├── architecture-diagram.png
 │
 └── README.md
+```
 
+---
 
-📝 Deployment Steps
-1. Upload website to S3
-2. Create CloudFront distribution
-3. Create DynamoDB table
-4. Create Lambda functions
-5. Create API Gateway (GET, POST, OPTIONS)
-6. Test APIs and enable CORS
-7. Connect frontend to API URL
+# 📝 Deployment Steps
+
+### **1. Upload frontend to S3**
+
+* Enable static website hosting
+* Upload index.html & app.js
+* Make files public
+
+---
+
+### **2. Create CloudFront Distribution**
+
+* Origin → S3 bucket website endpoint
+* Caching enabled
+* HTTPS enabled (optional)
+
+---
+
+### **3. Create DynamoDB Table**
+
+* Table name: `studentData`
+* Primary key: `studentid` (String)
+
+---
+
+### **4. Create Lambda Functions**
+
+* Add code for GET & POST
+* Set environment variables (optional)
+
+---
+
+### **5. Create API Gateway**
+
+* Method: GET → GET Lambda
+* Method: POST → POST Lambda
+* Enable CORS
+* Deploy to `/prod`
+
+---
+
+### **6. Connect Frontend to API URL**
+
+Update `app.js`:
+
+```js
+const apiUrl = "https://29t07zklok.execute-api.ap-south-1.amazonaws.com/prod";
+```
+
+---
+
+### **7. Test Application**
+
+* Open CloudFront URL
+* Insert student data
+* Retrieve student list
+* Confirm DynamoDB updates
+
+---
+
+# 🎯 Final Result
+
+✔ Fully serverless
+✔ Auto-scaling
+✔ No servers to manage
+✔ Low-cost
+✔ Highly available
+✔ Production-ready architecture
+
+---
+
+If you want, I can also generate:
+
+✅ Architecture diagram in PNG
+✅ A version of README with images
+✅ A Terraform/IaC version
+✅ A video explanation script
+
+Just tell me!
