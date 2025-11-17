@@ -259,13 +259,4 @@ const apiUrl = "https://29t07zklok.execute-api.ap-south-1.amazonaws.com/prod";
 ✔ Highly available
 ✔ Production-ready architecture
 
----
 
-If you want, I can also generate:
-
-✅ Architecture diagram in PNG
-✅ A version of README with images
-✅ A Terraform/IaC version
-✅ A video explanation script
-
-Just tell me!
